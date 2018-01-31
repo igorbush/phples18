@@ -8,44 +8,38 @@ use App\Contact;
 
 class ContactController extends Controller
 {
-    public function view() 
-    {
+    public function index() 
+    {   
     	$rows = Contact::get();
     	return view('Contact')->with('rows', $rows);
     }
 
-    public function add(Request $request) 
+    public function create(Request $request) 
     {
     	$data = $request->all();
-    	$contact = new Contact;
-    	$contact->fill($data);
-    	$contact->insert(['name'=>$contact['name'], 'number'=>$contact['number']]);
-    	return redirect('/');
+        Contact::create($data);
+    	return redirect('/contacts');
     }
 
-    public function edit(Request $request) 
+    public function edit($id) 
     {
-        $id = $request['id'];
-        $cont = Contact::where('id', $id)->first();
+        $cont = Contact::find($id);
         $name = $cont['name'];
-        $num = $cont['number'];
-        return view('edit')->with(['name'=> $name , 'num' => $num , 'id' => $id]);
+        $number = $cont['number'];
+        return view('edit')->with(['name'=> $name , 'number' => $number , 'id' => $id]);
     }
 
-    public function save(Request $request) 
+    public function update(Request $request) 
     {
         $data = $request->all();
-        $contact = new Contact;
-        $contact->fill($data);
-        $save = Contact::where('id', $data['id'])->first();
-        $save->update(['name'=>$contact['name'], 'number'=>$contact['number']]);
-        return redirect('/');
+        $save = Contact::find($data['id']);
+        $save->update(['name'=>$data['name'], 'number'=>$data['number']]);
+        return redirect('/contacts');
     }
 
     public function searchnumber(Request $request) 
     {
-        $data = $request->all();
-        dump($data);   
+        $data = $request->all();   
         $number = $data['number'];
         $rows = Contact::where('number', 'LIKE', "%$number%")->get();
         return view('search')->with('rows', $rows);

@@ -15,8 +15,9 @@
 //     return view('welcome');
 // });
 
-Route::get('/', 'ContactController@view');
-Route::post('/addcont', 'ContactController@add')->name('addcontact');
-Route::get('/edit/{id}', 'ContactController@edit');
-Route::post('/edit/{id}/save', 'ContactController@save');
-Route::get('/search', 'ContactController@searchnumber');
+// Route::get('/', 'ContactController@view')->name('index');
+// Route::post('/addcont', 'ContactController@add')->name('addcontact');
+// Route::get('/edit', 'ContactController@edit')->name('editid');
+// Route::post('/edit/save', 'ContactController@save')->name('savecontact');
+Route::get('/search', 'ContactController@searchnumber')->name('searchcontact');
+Route::resource('contacts', 'ContactController');

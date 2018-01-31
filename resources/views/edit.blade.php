@@ -1,20 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-</head>
-<body>
-	<div style="margin: 50px auto; width:40%;">
-		<h1>записная книжка</h1>
-		</table>
-		<form method="POST" action="/edit/{{ $id }}/save">
+@extends('header')
+@section('edit')
+
+		<form action="/contacts/{{ $id }}" method="POST">
+   			<input type="hidden" name="_method" value="PUT">
+			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			<input type="hidden" name="id" placeholder="ФИО" value="{{ $id }}"><br>
 			<input type="text" name="name" placeholder="ФИО" value="{{ $name }}"><br>
-			<input type="text" name="number" placeholder="НОМЕР ТЕЛЕФОНА" value="{{ $num }}"><br>
+			<input type="text" name="number" placeholder="НОМЕР ТЕЛЕФОНА" value="{{ $number }}"><br>
 			<button type="submit">изменить</button>
-			{{ csrf_field() }}
+			
 		</form>
-	</div>
-</body>
-</html>
+@endsection
